@@ -224,20 +224,21 @@ articles: parsedData.articles
 
 
   fetchMoreData = async() => {
-   this.setState({
+ 
+   let url = `https://newsapi.org/v2/top-headlines?q=${this.props.query}&apiKey=0a280a022fa1418c961a4b25a838b5c2&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
+
+     this.setState({
     page: this.state.page + 1
-   })
-   let url = `https://newsapi.org/v2/top-headlines?q=${this.props.query}&apiKey=0a280a022fa1418c961a4b25a838b5c2&page=${this.state.page}&pageSize=${this.props.pageSize}`;
- //this.setState({
-   // loading: true
-   //});
+   });
+    this.setState({
+    loading: true
+   });
 let data = await fetch(url);
  this.setState({
     loading: false
    });
 let parsedData = await data.json();
   this.setState({
-    page: this.state.page + 1,
 articles: this.state.articles.concat(parsedData.articles || []),
 totalResults : parsedData.totalResults
   });
@@ -245,12 +246,12 @@ totalResults : parsedData.totalResults
 
 
   render() {
-console.log("Inside render");
+//console.log("Inside render");
 
 return (
   <ErrorBoundary fallback = {<h1>Something went wrong</h1>} >
       <div className = "container my-4 mx-5">
-        <h2 className = "text-center" style = {{margin: '35px 0px'}}>Top {this.capitalizeFirstLetter(this.props.query)} Headlines</h2>
+        <h2 className = "text-center" style = {{margin: '35px 0px', marginTop: '90px' }}>Top {this.capitalizeFirstLetter(this.props.query)} Headlines</h2>
           <div className="text-center">
             {this.state.loading && <Spinner />}</div>
 
